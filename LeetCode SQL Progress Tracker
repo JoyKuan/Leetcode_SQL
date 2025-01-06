@@ -1,0 +1,48 @@
+# LeetCode SQL Progress Tracker
+
+This repository tracks my progress in solving SQL problems on LeetCode. The aim is to enhance SQL query skills and document solutions, insights, and learning.
+
+---
+
+## 📊 Progress Overview
+
+| Total Problems Solved | Easy | Medium | Hard |
+|------------------------|------|--------|------|
+| 0                      | 0    | 0      | 0    |
+
+---
+
+## 📝 Problem Tracker
+
+| Problem ID | Problem Title          | Difficulty | Date Solved | Key Concepts/Takeaways           | Link to Solution                |
+|------------|------------------------|------------|-------------|-----------------------------------|---------------------------------|
+| 175        | Combine Two Tables     | Easy       | YYYY-MM-DD  | Basic join between two tables.    | [Solution](./solutions/175.sql) |
+| 176        | Second Highest Salary  | Medium     | YYYY-MM-DD  | `LIMIT`, `OFFSET`, `ORDER BY`.    | [Solution](./solutions/176.sql) |
+| 177        | Nth Highest Salary     | Medium     | YYYY-MM-DD  | `DENSE_RANK()` and subqueries.    | [Solution](./solutions/177.sql) |
+| 178        | Rank Scores            | Medium     | YYYY-MM-DD  | Use of `RANK()` and `PARTITION`.  | [Solution](./solutions/178.sql) |
+| 180        | Consecutive Numbers    | Medium     | YYYY-MM-DD  | Self-join and window functions.   | [Solution](./solutions/180.sql) |
+
+_Add more rows as you progress!_
+
+---
+
+## 📚 Notes and Concepts Learned
+
+### General SQL Concepts
+- **Joins**: Inner join, left join, right join, full join.
+- **Aggregation**: `GROUP BY`, `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`.
+- **Window Functions**: `RANK()`, `DENSE_RANK()`, `ROW_NUMBER()`, `NTILE()`.
+- **Subqueries**: Scalar, correlated, and nested subqueries.
+
+### Common Patterns
+- Ranking salaries or scores with `RANK()` and `DENSE_RANK()`.
+- Using `GROUP BY` for aggregation.
+- Filtering data with `HAVING` after aggregation.
+
+---
+
+## 🚀 How to Use This Repository
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/leetcode-sql-progress.git
