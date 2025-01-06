@@ -1,5 +1,7 @@
 <h2><a href="https://leetcode.com/problems/group-sold-products-by-the-date">Group Sold Products By The Date</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Table <code>Activities</code>:</p>
 
+The number is 1484. Group Sold Products By The Date (not 1625).
+
 <pre>
 +-------------+---------+
 | Column Name | Type    |
