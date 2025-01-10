@@ -7,4 +7,5 @@ WITH high_earner AS(
  
 SELECT d.name AS Department, Employee, Salary
 FROM Department d
-RIGHT JOIN (SELECT * FROM high_earner WHERE rnk IN (1,2,3)) top3 ON top3.departmentId = d.id
+RIGHT JOIN high_earner h ON h.departmentId = d.id
+WHERE rnk <=3
