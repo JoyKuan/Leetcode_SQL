@@ -1,13 +1,10 @@
 # Write your MySQL query statement below
-SELECT project_id 
-FROM Project
-GROUP BY project_id
-HAVING COUNT(employee_id) = (
-    SELECT COUNT(employee_id) AS cnt
+WITH CTE AS (
+    SELECT project_id, COUNT(employee_id) AS cnt
     FROM Project
     GROUP BY project_id
-    ORDER BY COUNT(employee_id) DESC
-    LIMIT 1
 )
 
-
+SELECT project_id 
+FROM CTE
+WHERE cnt = (SELECT MAX(cnt) FROM CTE)
