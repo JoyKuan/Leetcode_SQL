@@ -1,9 +1,8 @@
 -- Write your PostgreSQL query statement below
 SELECT session_id
-FROM Playback
-WHERE session_id NOT IN (
-    SELECT session_id
-    FROM Playback p
-    LEFT JOIN Ads a ON p.customer_id = a.customer_id
-    WHERE timestamp >= start_time AND timestamp<=end_time
+FROM Playback p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Ads a
+    WHERE p.customer_id = a.customer_id AND timestamp >= start_time AND timestamp<=end_time
 )
