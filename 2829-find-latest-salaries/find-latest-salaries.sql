@@ -14,7 +14,7 @@
 -- Method 2: 單表掃描 + 窗口函數排序
 -- SELECT emp_id, firstname, lastname, salary, department_id
 -- FROM (
---     SELECT *, RANK() OVER(PARTITION BY emp_id ORDER BY CAST(salary AS INT) DESC) rnk
+--     SELECT *, dense_rank() OVER(PARTITION BY emp_id ORDER BY CAST(salary AS INT) DESC) rnk
 --     FROM Salary
 -- )
 -- WHERE rnk=1
