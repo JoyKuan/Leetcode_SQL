@@ -3,7 +3,7 @@ SELECT
     emp_id,
     firstname,
     lastname,
-    MAX(salary) AS salary,
+    MAX(CAST(salary AS INT)) AS salary,
     department_id
 FROM Salary
 GROUP BY emp_id, firstname, lastname, department_id
