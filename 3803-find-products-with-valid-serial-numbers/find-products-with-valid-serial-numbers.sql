@@ -10,5 +10,5 @@
 SELECT
     *
 FROM products
-WHERE description ~ '(?:\s|^)SN\d{4}-\d{4}(?=\s|$)'
+WHERE description ~ '\mSN\d{4}-\d{4}\M'
 ORDER BY product_id ASC;
