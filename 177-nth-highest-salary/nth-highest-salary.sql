@@ -4,7 +4,7 @@ BEGIN
 
     WITH emp_rank AS (
         SELECT 
-            DISTINCT e.Salary,
+            e.Salary,
             DENSE_RANK() OVER(ORDER BY e.Salary DESC) rnk
         FROM Employee e
     )
