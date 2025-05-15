@@ -2,15 +2,8 @@ CREATE OR REPLACE FUNCTION NthHighestSalary(N INT) RETURNS TABLE (Salary INT) AS
 BEGIN
   RETURN QUERY (
 
-    WITH emp_rank AS (
-        SELECT 
-            e.Salary,
-            DENSE_RANK() OVER(ORDER BY e.Salary DESC) rnk
-        FROM Employee e
-    )
-
     SELECT e.Salary 
-    FROM emp_rank e
+    FROM (SELECT e.Salary,DENSE_RANK() OVER(ORDER BY e.Salary DESC) rnk FROM Employee e) e
     WHERE e.rnk = N
     LIMIT 1
     
