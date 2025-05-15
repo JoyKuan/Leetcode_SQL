@@ -12,6 +12,7 @@ BEGIN
     SELECT e.Salary 
     FROM emp_rank e
     WHERE e.rnk = N
+    LIMIT 1
     
   );
 END;
