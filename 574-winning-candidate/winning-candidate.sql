@@ -2,7 +2,7 @@
 SELECT name
 FROM Candidate c
 JOIN (
-    SELECT candidateId, COUNT(*) AS cnt
+    SELECT candidateId, COUNT(*) AS votes
     FROM Vote
     GROUP BY candidateId
     ORDER BY COUNT(*) DESC
