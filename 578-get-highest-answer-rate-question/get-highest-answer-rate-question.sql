@@ -2,7 +2,7 @@
 SELECT question_id AS survey_log
 FROM SurveyLog
 GROUP BY question_id
-ORDER BY COUNT(answer_id)*1.0 / SUM(CASE WHEN action='show' THEN 1 ELSE 0 END) DESC, question_id ASC
+ORDER BY COUNT(answer_id)*1.0 / SUM(CASE WHEN action='show' THEN 1 ELSE 0 END) DESC, question_id
 LIMIT 1
 
 
