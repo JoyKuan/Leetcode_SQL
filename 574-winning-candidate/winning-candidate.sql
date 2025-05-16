@@ -12,7 +12,7 @@
 
 SELECT name
 FROM Candidate c
-WHERE id = (
+WHERE id IN (
     SELECT candidateId
     FROM Vote
     GROUP BY candidateId
