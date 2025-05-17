@@ -7,6 +7,7 @@ WITH avg_activity AS(
 
 SELECT business_id
 FROM Events e
-JOIN avg_activity a ON e.event_type = a.event_type
+JOIN avg_activity a ON e.event_type = a.event_type AND e.occurrences > a.avg
 GROUP BY business_id
-HAVING SUM(CASE WHEN occurrences > avg THEN 1 ELSE 0 END) > 1
+HAVING COUNT(e.event_type) > 1
+-- HAVING SUM(CASE WHEN occurrences > avg THEN 1 ELSE 0 END) > 1
