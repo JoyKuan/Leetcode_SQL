@@ -4,18 +4,11 @@ WITH followee_CTE AS(
     FROM Follow
     GROUP BY followee
     HAVING COUNT(follower) >= 1
-),
-follower_CTE AS(
-    SELECT follower
-    FROM Follow
-    WHERE follower IN (SELECT followee FROM followee_CTE)
-    GROUP BY follower
-    HAVING COUNT(followee) >= 1
 )
 
 SELECT followee AS follower, num
 FROM followee_CTE fe
-INNER JOIN follower_CTE fr ON fe.followee = fr.follower
+WHERE followee IN (SELECT follower FROM Follow GROUP BY follower HAVING COUNT(followee) >= 1)
 ORDER BY follower
 
 
