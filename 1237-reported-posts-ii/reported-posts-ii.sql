@@ -8,44 +8,27 @@
 -- group by 1
 -- )
 
-WITH spam_reports AS (
+WITH deduplicate_report AS (
     SELECT DISTINCT action_date, post_id
     FROM Actions
     WHERE action = 'report' AND extra = 'spam'
 ),
-daily_stats AS (
+spam_reports AS(
     SELECT 
-        action_date,
-        COUNT(*) AS total_spam_posts,
+        action_date, 
+        COUNT(post_id) AS total_spam_posts,
         SUM(CASE WHEN post_id IN (SELECT post_id FROM Removals WHERE remove_date IS NOT NULL) THEN 1 ELSE 0 END) AS removed_spam_posts
-    FROM spam_reports
+    FROM deduplicate_report
     GROUP BY action_date
 ),
-daily_percent AS (
-    SELECT 
-        ROUND(removed_spam_posts * 100.0 / total_spam_posts, 2) AS percent
-    FROM daily_stats
+daily_percent AS(
+    SELECT (removed_spam_posts * 100.0 / total_spam_posts) AS percent
+    FROM spam_reports
 )
-SELECT ROUND(AVG(percent), 2) AS average_daily_percent
-FROM daily_percent;
 
--- WITH spam_reports AS(
---     SELECT 
---         action_date, 
---         COUNT(DISTINCT post_id) AS total_spam_posts,
---         SUM(CASE WHEN post_id IN (SELECT post_id FROM Removals WHERE remove_date IS NOT NULL) THEN 1.0 ELSE 0.0 END) AS removed_spam_posts
---     FROM Actions
---     WHERE action='report' AND extra='spam'
---     GROUP BY action_date
--- ),
--- daily_percent AS(
---     SELECT (removed_spam_posts * 100.0 / total_spam_posts) AS percent
---     FROM spam_reports
--- )
-
--- SELECT 
--- round(sum(percent)::numeric/count(*),2) as average_daily_percent
--- FROM daily_percent
+SELECT 
+round(sum(percent)::numeric/count(*),2) as average_daily_percent
+FROM daily_percent
 
 
 
