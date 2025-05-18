@@ -1,26 +1,11 @@
 -- Write your PostgreSQL query statement below
-with cte as (
-    select
-        action_date,
-        round(100 * (count(distinct post_id) filter (where remove_date is not null and extra = 'spam'))::numeric / count(distinct post_id) filter (where extra = 'spam'),2) as daily_pct
-    from (
-        select
-            a.post_id,
-            action,
-            extra,
-            action_date,
-            remove_date
-        from actions a
-        left join removals r on a.post_id in (r.post_id)
-    ) a
-    group by 1
-    having (count(extra) filter (where extra = 'spam')) > 0
-    order by action_date
+select round(avg(average_daily_percent*100),2) as average_daily_percent
+from (
+select action_date,(count(distinct case when r.post_id is not null then r.post_id end)*1.0)/count(distinct a.post_id ) as average_daily_percent
+from Actions A left join removals r on a.post_id=r.post_id
+where action='report' and extra='spam'
+group by 1
 )
-
-select
-  round(sum(daily_pct)::numeric/count(*),2) as average_daily_percent
-from cte
 
 -- WITH spam_reports AS(
 --     SELECT 
