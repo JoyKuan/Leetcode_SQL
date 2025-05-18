@@ -26,8 +26,7 @@ daily_percent AS(
     FROM spam_reports
 )
 
-SELECT 
-round(sum(percent)::numeric/count(*),2) as average_daily_percent
+SELECT round(sum(percent)*1.0/count(*),2) as average_daily_percent
 FROM daily_percent
 
 
