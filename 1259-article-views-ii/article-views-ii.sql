@@ -5,7 +5,7 @@ FROM (
     FROM Views
     GROUP BY view_date, viewer_id
     HAVING COUNT(DISTINCT article_id) > 1
-) 
+) AS subqc
 ORDER BY id
 
 
