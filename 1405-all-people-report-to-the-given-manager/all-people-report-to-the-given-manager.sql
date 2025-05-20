@@ -1,11 +1,9 @@
 -- Write your PostgreSQL query statement below
-select 
-distinct 
-e3.employee_id
-
-from 
-Employees e1 
-join Employees e2 on e1.employee_id=e2.manager_id
-join Employees e3 on e2.employee_id=e3.manager_id
-where e1.manager_id=1 and e3.employee_id<>1
+with recursive cte as (select employee_id from employees where employee_id=1
+                        UNION
+                        select e.employee_id
+                        from employees e join cte c on e.manager_id = c.employee_id
+                        )
+select * from cte
+where employee_id!=1
 
