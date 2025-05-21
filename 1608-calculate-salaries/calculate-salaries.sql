@@ -4,7 +4,7 @@ WITH company_tax_rate AS(
         company_id, 
         CASE
             WHEN MAX(salary) < 1000 THEN 0
-            WHEN MAX(salary) >= 1000 AND MAX(salary)<=10000 THEN 24
+            WHEN MAX(salary) between 1000 and 10000 THEN 24
             ELSE 49
         END AS tax_rate
     FROM Salaries
