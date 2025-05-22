@@ -4,7 +4,7 @@ WITH airport_cte AS(
     UNION ALL
     SELECT arrival_airport AS airport_id, flights_count FROM Flights
 ),
-airport_cte2 AS(
+ranking_cte AS(
     SELECT airport_id, 
         SUM(flights_count) AS flight_total,
         RANK() OVER(ORDER BY SUM(flights_count) DESC) AS rnk
@@ -13,7 +13,7 @@ airport_cte2 AS(
 )
 
 SELECT airport_id
-FROM airport_cte2
+FROM ranking_cte
 WHERE rnk = 1
 
 
