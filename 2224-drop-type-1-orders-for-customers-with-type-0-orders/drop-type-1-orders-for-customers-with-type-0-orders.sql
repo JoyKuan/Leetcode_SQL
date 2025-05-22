@@ -9,6 +9,3 @@ WITH orders_cte AS(
 SELECT order_id, customer_id, order_type
 FROM orders_cte
 WHERE rnk = 1
-
-
-
