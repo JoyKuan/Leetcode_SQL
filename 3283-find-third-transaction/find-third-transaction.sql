@@ -1,20 +1,50 @@
 -- Write your PostgreSQL query statement below
-with t as(select 
-    user_id, 
-    spend,
-    transaction_date, 
-    lead(transaction_date) over w third_transaction_date,
-    row_number() over w rn,
-    lag(spend) over w  prev_spend,
-    lead(spend) over w next_spend
-from transactions
-window w as (partition by user_id order by transaction_date))
-select user_id, next_spend third_transaction_spend, third_transaction_date 
-from t
-where rn = 2
-and next_spend > spend
-and next_spend > prev_spend
-order by user_id asc
+WITH CTE AS (
+    SELECT 
+        user_id, 
+        spend,
+        transaction_date, 
+        LEAD(transaction_date) OVER w AS third_transaction_date,
+        ROW_NUMBER() over w AS rn,
+        LAG(spend) over w AS first_spend,
+        LEAD(spend) over w AS third_spend
+    FROM transactions
+WINDOW w AS (PARTITION BY user_id ORDER BY transaction_date)
+)
+
+SELECT 
+    user_id,
+    third_spend AS third_transaction_spend,
+    third_transaction_date
+FROM CTE
+WHERE rn=2 AND third_spend > spend AND third_spend > first_spend
+ORDER BY user_id
+
+
+
+
+
+
+
+-- with t as(select 
+--     user_id, 
+--     spend,
+--     transaction_date, 
+--     lead(transaction_date) over w third_transaction_date,
+--     row_number() over w rn,
+--     lag(spend) over w  prev_spend,
+--     lead(spend) over w next_spend
+-- from transactions
+-- window w as (partition by user_id order by transaction_date))
+
+
+
+-- select user_id, next_spend third_transaction_spend, third_transaction_date 
+-- from t
+-- where rn = 2
+-- and next_spend > spend
+-- and next_spend > prev_spend
+-- order by user_id asc
 
 
 
