@@ -6,16 +6,11 @@ WITH call_duration_rank AS(
         TO_CHAR((duration || ' second')::interval, 'HH24:MI:SS') AS duration_formatted,
         RANK() OVER(PARTITION BY type ORDER BY TO_CHAR((duration || ' second')::interval, 'HH24:MI:SS') DESC) AS rnk
     FROM Calls
-),
-three_longest_calls AS(
-    SELECT *
-    FROM call_duration_rank
-    WHERE rnk IN (1, 2, 3)
 )
 
 SELECT first_name, type, duration_formatted
-FROM three_longest_calls tlc
-JOIN Contacts c ON tlc.contact_id = c.id
+FROM call_duration_rank tlc
+JOIN Contacts c ON tlc.contact_id = c.id AND rnk <=3
 ORDER BY type DESC, duration_formatted DESC, first_name DESC
 
 
