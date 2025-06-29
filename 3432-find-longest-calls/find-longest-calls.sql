@@ -4,7 +4,7 @@ WITH call_duration_rank AS(
         contact_id, 
         type,
         TO_CHAR((duration || ' second')::interval, 'HH24:MI:SS') AS duration_formatted,
-        RANK() OVER(PARTITION BY type ORDER BY TO_CHAR((duration || ' second')::interval, 'HH24:MI:SS') DESC) AS rnk
+        DENSE_RANK() OVER(PARTITION BY type ORDER BY TO_CHAR((duration || ' second')::interval, 'HH24:MI:SS') DESC) AS rnk
     FROM Calls
 )
 
