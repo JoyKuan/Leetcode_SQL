@@ -11,6 +11,6 @@ WITH sub_cte AS(
 
 SELECT *
 FROM sub_cte
-WHERE paid_avg_duration IS NOT NULL
+WHERE trial_avg_duration IS NOT NULL AND paid_avg_duration IS NOT NULL
 
 
