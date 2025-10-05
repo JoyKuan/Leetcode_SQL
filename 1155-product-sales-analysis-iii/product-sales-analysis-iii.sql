@@ -7,5 +7,5 @@ with first_year_cte as(
 
 select s.product_id, first_year, quantity, price
 from Sales s
-left join first_year_cte f on s.product_id = f.product_id
+join first_year_cte f on s.product_id = f.product_id
 where year = first_year
