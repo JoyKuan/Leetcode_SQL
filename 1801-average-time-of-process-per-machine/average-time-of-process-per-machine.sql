@@ -1,5 +1,14 @@
 -- Write your PostgreSQL query statement below
-select machine_id,
-    ROUND((SUM(case when activity_type='start' then timestamp*(-1) else timestamp end) / COUNT(distinct process_id))::numeric, 3) AS processing_time
-from Activity
-group by machine_id
+SELECT a.machine_id, 
+       ROUND(AVG(b.timestamp - a.timestamp)::DECIMAL, 3) AS processing_time
+FROM Activity a, 
+     Activity b
+WHERE 
+    a.machine_id = b.machine_id
+AND 
+    a.process_id = b.process_id
+AND 
+    a.activity_type = 'start'
+AND 
+    b.activity_type = 'end'
+GROUP BY a.machine_id
