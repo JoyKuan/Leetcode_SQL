@@ -7,7 +7,7 @@ from (
         LAG(num, 2) over() AS former
     from Logs
 )
-where num = prev AND num=former AND prev=former
+where num = prev AND num=former
 
 
 -- +----+-----+
