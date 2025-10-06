@@ -1,13 +1,12 @@
 -- Write your PostgreSQL query statement below
-WITH cum_sum AS(
-    SELECT person_name,
-    SUM(weight) OVER(ORDER BY turn) AS Total_Weight
-    FROM Queue
+select person_name
+from (
+    select *,
+        SUM(weight) OVER(ORDER BY turn) AS cum_weight
+    from Queue   
 )
+where cum_weight <= 1000
+order by cum_weight desc
+limit 1
 
-SELECT person_name
-FROM cum_sum
-WHERE Total_Weight <= 1000
-ORDER BY Total_Weight DESC
-LIMIT 1
 
