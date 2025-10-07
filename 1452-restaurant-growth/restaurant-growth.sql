@@ -1,13 +1,15 @@
 -- Write your PostgreSQL query statement below
-WITH uni_date AS(
-    SELECT visited_on, SUM(amount) AS amount
-    FROM Customer
-    GROUP BY visited_on
+-- unique visited date because table has duplicated date
+with deduplicated_visited_date AS(
+    select visited_on, sum(amount) AS amount
+    from Customer
+    group by visited_on
 )
 
-
-SELECT visited_on,
-    SUM(amount) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount,
-    ROUND(AVG(amount) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS average_amount
-FROM uni_date 
+select
+    visited_on,
+    sum(amount) over(order by visited_on rows between 6 preceding and current row) AS amount,
+    round(avg(amount) over(order by visited_on rows between 6 preceding and current row),2) AS average_amount
+from deduplicated_visited_date
+order by visited_on 
 OFFSET 6
