@@ -1,20 +1,12 @@
 -- Write your PostgreSQL query statement below
-WITH CTE AS(
-    SELECT requester_id, accepter_id FROM RequestAccepted
-    UNION
-    SELECT accepter_id AS requester_id, requester_id AS accepter_id FROM RequestAccepted
-
+with friends_cte AS(
+    select requester_id as id from RequestAccepted
+    union all
+    select accepter_id as id from RequestAccepted
 )
 
-SELECT requester_id AS id, COUNT(*) AS num
-FROM CTE
-GROUP BY requester_id
-ORDER BY COUNT(*) DESC
-LIMIT 1
-
-
-
-
-
-
-
+select id, count(*) AS num
+from friends_cte
+group by id
+order by count(*) desc
+limit 1
