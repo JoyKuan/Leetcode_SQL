@@ -8,6 +8,6 @@ class Solution:
             rem = cur_sum % k
             if rem not in reminderHashMap:
                 reminderHashMap[rem] = idx
-            elif (rem in reminderHashMap) and (idx - reminderHashMap[rem] > 1):
+            elif idx - reminderHashMap[rem] > 1:
                 return True
         return False
