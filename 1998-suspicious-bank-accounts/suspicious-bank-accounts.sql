@@ -1,21 +1,20 @@
 -- Write your PostgreSQL query statement below
-with total_income_permonth AS(
-    select account_id, to_char(day, 'YYYY-MM') AS month, sum(amount) AS total_income
-    from Transactions
+with cte as(
+    select
+        t.account_id, date_trunc('month', day) AS trans_month,
+        LAG(date_trunc('month', day)) over(partition by t.account_id order by date_trunc('month', day)) AS prev_trans_month
+    from Transactions t
+    join Accounts a on t.account_id = a.account_id
     where type = 'Creditor'
-    group by account_id, to_char(day, 'YYYY-MM')
+    group by t.account_id, max_income, date_trunc('month', day)
+    having sum(amount) > max_income
+    order by t.account_id, trans_month
 )
-
 select distinct account_id
-from (
-    select t.account_id, month, 
-    LAG(month) over(partition by t.account_id order by month) AS prev_month
-    from total_income_permonth t
-    left join Accounts a on t.account_id = a.account_id
-    where total_income > max_income
-)
-where (TO_DATE(prev_month || '-01', 'YYYY-MM-DD') + INTERVAL '1 month')::date
-= TO_DATE(month || '-01', 'YYYY-MM-DD')
+from cte
+where prev_trans_month + interval '1 month' = trans_month
+
+
 
 
 
