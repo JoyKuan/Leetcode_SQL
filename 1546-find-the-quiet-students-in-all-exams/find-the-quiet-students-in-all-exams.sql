@@ -12,6 +12,3 @@ with cte AS(
 select student_id, student_name
 from Student
 where student_id not in (select student_id from cte) AND student_id in (select distinct student_id from Exam)
-
-
-
