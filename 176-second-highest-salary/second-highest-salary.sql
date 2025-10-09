@@ -5,5 +5,3 @@ from (
     from Employee
 )
 where rnk = 2
-
-
